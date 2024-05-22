@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Sacco Project</title>
+
+    <!-- Include CSS and Bootstrap 5 -->
+
+</head>
+
+<body>
+
+    <h1>Sacco Project</h1>
+
+    <form id="transaction-form">
+
+        <label for="member-id">Member ID:</label>
+
+        <input type="text" id="member-id" name="member-id">
+
+        <label for="transaction-type">Transaction Type:</label>
+
+        <select id="transaction-type" name="transaction-type">
+
+            <option value="Deposit">Deposit</option>
+
+            <option value="Saving">Saving</option>
+
+            <option value="Withdrawal">Withdrawal</option>
+
+        </select>
+
+        <button type="submit">Submit</button>
+
+    </form>
+
+    <div id="balance-section">   <!-- Display balance here -->
+
+    <h2>Balance: {{ balance }}</h2>
+
+    </div>
+
+
+
+    <!-- Include HTMX and JavaScript code to handle form submissions asynchronously -->
+
+    <!-- Include HTMX library -->
+
+<script src="https://unpkg.com/htmx.org@latest/dist/htmx.js"></script>
+
+
+
+<script>
+
+    document.getElementById('transaction-form').addEventListener('htmx:submit', function (event) {
+
+        event.preventDefault();
+
+        var form = event.target;
+
+        var formData = new FormData(form);
+
+        htmx.ajax(form, {
+
+            method: 'POST',
+
+            body: formData,
+
+            headers: {
+
+                'X-CSRFToken': '{{ csrf_token }}'
+
+            },
+
+            onSettle: function (response) {
+
+                // Update the balance section with the response data
+
+                document.getElementById('balance-section').innerHTML = response.text();
+
+            }
+
+        });
+
+    });
+
+</script>
+
+    
+
+<div id="transaction-details-section">
+
+    <h2>Transaction Details</h2>
+
+    <p>Date and Time: {{ transaction.timestamp }}</p>
+
+    <!-- Display other transaction details here -->
+
+</div>
+
+    
+    
+</body>
+
+</html>
+
