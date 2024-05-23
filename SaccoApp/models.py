@@ -2,14 +2,11 @@ from django.db import models
 
 
 class Member(models.Model):
-
-    member_id = models.CharField(max_length=10)
-
+member_id = models.CharField(max_length=10)
 
 
-class Transaction(models.Model):
 
-    member = models.ForeignKey(Member, on_delete=models.CASCADE)
+class Transaction(models.Model): member = models.ForeignKey(Member, on_delete=models.CASCADE)
 
     transaction_type = models.CharField(max_length=10)
 
@@ -27,7 +24,13 @@ else:
     balance = None
 
 def __str__(self):
-        return f'{self.transaction_type} - {self.member_id} - {self.amount}'
+        return f'{self.transaction_type} - {self.member_id} - {self.amount} - {self.timestamp}'
+
+from rest_framework
+
+
+
+
 
 #from django.db import models
 
