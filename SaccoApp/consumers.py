@@ -1,7 +1,10 @@
-from channels.generic.websocket import AsyncWebsocketConsumer
 import json
+
+from channels.generic.websocket 
+import AsyncWebsocketConsumer
 from .models import Transaction
 from .serializers import TransactionSerializer
+
 
 class TransactionConsumer(AsyncWebsocketConsumer):
     async def connect(self):
