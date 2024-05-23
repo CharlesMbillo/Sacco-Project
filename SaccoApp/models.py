@@ -1,8 +1,7 @@
 from django.db import models
 
-
-class Member(models.Model):
-member_id = models.CharField(max_length=10)
+#class Member(models.Model):
+#member=member_models.CharField(max_length=10)
 
 
 
