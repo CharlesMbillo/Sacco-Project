@@ -32,6 +32,10 @@
 
         </select>
 
+        <label for="face-amount">Face Amount:</label> 
+        <input type="number" class="form-control" id="face-amount" name="face-amount" step="0.01" required> 
+   
+
         <button type="submit">Submit</button>
 
     </form>
@@ -42,8 +46,16 @@
 
     </div>
 
-
-
+    <div id="transaction-details-section">
+        <h2>Transaction Details</h2>
+        <p>Date and Time: {{ transaction.timestamp }}</p>
+        <p>Member ID: {{transaction.member_id}}</p>
+        <p>Transaction Type ID: {{transaction.transaction_type}}</p>
+ 
+        <!-- Display other transaction details here -->  
+       
+    </div>
+    
     <!-- Include HTMX and JavaScript code to handle form submissions asynchronously -->
 
     <!-- Include HTMX library -->
@@ -78,7 +90,7 @@
 
                 // Update the balance section with the response data
 
-                document.getElementById('balance-section').innerHTML = response.text();
+                document.getElementById('balance-section').innerHTML = response.text();        document.getElementById('transaction-timestamp').innerText = response.json().transaction.timestamp;
 
             }
 
@@ -87,21 +99,7 @@
     });
 
 </script>
-
-    
-
-<div id="transaction-details-section">
-
-    <h2>Transaction Details</h2>
-
-    <p>Date and Time: {{ transaction.timestamp }}</p>
-
-    <!-- Display other transaction details here -->
-
-</div>
-
-    
-    
+  
 </body>
 
 </html>

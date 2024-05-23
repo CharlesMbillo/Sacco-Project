@@ -1,9 +1,55 @@
 from django.shortcuts import render
 
 from .models import Member, Transaction
-
 from .serializers import MemberSerializer, TransactionSerializer
 
+from django.shortcuts import render
+from django.http import JsonResponse
+from .models import Member, Transaction
+
+def sacco_transaction_view(request):
+    if request.method == 'POST':
+        member_id = request.POST.get('member-id')
+        transaction_type = request.POST.get('transaction-type')
+        face_amount = request.POST.get('face-amount')
+        
+        # Process the transaction and update the balance
+        transaction = Transaction(
+member_id=member_id, transaction_type=transaction_type,                          
+            face_amount=face_amount
+        )
+        transaction.save()
+
+        # Ensure transaction is defined before accessing its member attribute
+transaction = Transaction.objects.latest('id')
+
+# Assuming you want to retrieve the last transaction record
+
+if transaction:
+    member = transaction.member
+    balance = member.balance
+else:
+    # Handle the case where no transaction was found
+    balance = None
+    
+# Retrieve the related Member instance for the transaction
+member = transaction.member
+
+# Now access the balance of the member
+balance = member.balance 
+balance = transaction.member.balance  
+
+# assume this is the updated balance
+
+# Return the updated balance as a JSON response
+return JsonResponse({
+    'balance': balance, 
+    'transaction': {
+        'timestamp': transaction.timestamp
+    }
+})
+
+    return render(request, 'sacco.html')
 
 
 def index(request):
@@ -13,6 +59,7 @@ def index(request):
         member_id = request.POST.get('member-id')
 
         transaction_type = request.POST.get('transaction-type')
+face_amount = request.POST.get('face-amount')
 
         
 
@@ -57,20 +104,18 @@ def index(request):
             'transactions': [transaction_serializer.data],
 
             'balance': balance
-
         })
+     else:
 
-    else:
+members = Member.objects.all()
 
-        members = Member.objects.all()
+transactions = Transaction.objects.all()
 
-        transactions = Transaction.objects.all()
+member_serializer = MemberSerializer(members, many=True)
 
-        member_serializer = MemberSerializer(members, many=True)
+transaction_serializer = TransactionSerializer(transactions, many=True)
 
-        transaction_serializer = TransactionSerializer(transactions, many=True)
-
-        return render(request, 'index.html', {
+return render(request, 'index.html', {
 
             'members': member_serializer.data,
 
@@ -78,14 +123,8 @@ def index(request):
 
         })
 
-from django.shortcuts import render
 
 from django.utils import timezone
-
-from .models import Member, Transaction
-
-from .serializers import MemberSerializer, TransactionSerializer
-
 
 
 def index(request):
@@ -98,7 +137,7 @@ def index(request):
 
         # Create a new transaction record with the current date and time
 
-        transaction = Transaction(member=member, transaction_type=transaction_type, amount=0, timestamp=timezone.now())  # Set the amount as needed
+        transaction = Transaction(member=member, transaction_type=transaction_type, face_amount=0, timestamp=timezone.now())  # Set the amount as needed
 
         transaction.save()
 
