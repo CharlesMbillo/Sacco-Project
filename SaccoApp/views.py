@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from .models import Member, Transaction
 
-def sacco_transaction_view(request):
+def transaction(request):
     if request.method == 'POST':
         member_id = request.POST.get('member-id')
         transaction_type = request.POST.get('transaction-type')
