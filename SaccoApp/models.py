@@ -26,4 +26,13 @@ else:
     # Handle the case where no transaction was found
     balance = None
 
-# Retr
+from django.db import models
+
+class SaccoMember(models.Model):
+    member_id = models.CharField(max_length=20, unique=True)
+    balance = models.DecimalField(max_digits=10, decimal_places=2)
+
+class SaccoTransaction(models.Model):
+    member = models.ForeignKey(SaccoMember, on_delete=models.CASCADE)
+    transaction_type = models.CharField(max_length=20)
+    timestamp = models.DateTimeField(auto_now_add=True)

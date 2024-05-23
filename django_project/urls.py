@@ -26,7 +26,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', views.index, name='index'),
+from django.urls import path
+from . import views
 
+urlpatterns = [
+    path('SaccoApp/', views.sacco_transaction_view, name='sacco_transaction_view'),
+]
 ]
 
     # Add more URL patterns as needed
