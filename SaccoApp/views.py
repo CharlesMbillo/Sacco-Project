@@ -49,7 +49,7 @@ return JsonResponse({
     }
 })
 
-    return render(request, 'sacco.html')
+    return render(request, 'index.html')
 
 
 def index(request):
