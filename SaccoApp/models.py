@@ -1,8 +1,7 @@
 from django.db import models
 
-#class Member(models.Model):
-#member=member_models.CharField(max_length=10)
-class Member(models.Model)
+class Member(models.Model):
+    member_id = models.CharField(max_length=10)
 Member=models.CharField(max_length=10)
 class Transaction(models.Model): member = models.ForeignKey(Member, on_delete=models.CASCADE)
 transaction_type = models.CharField(max_length=10)
