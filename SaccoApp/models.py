@@ -1,23 +1,25 @@
 from django.db import models
 
+
 class Member(models.Model):
     member_id = models.CharField(max_length=10)
-Member=models.CharField(max_length=10)
-class Transaction(models.Model): member = models.ForeignKey(Member, on_delete=models.CASCADE)
-transaction_type = models.CharField(max_length=10)
-amount = models.DecimalField(max_digits=10, decimal_places=2)
-timestamp = models.DateTimeField(auto_now_add=True)
 
-latest_transaction = Transaction.objects.latest('id')
+class Transaction(models.Model):
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
+    transaction_type = models.CharField(max_length=10)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
-if latest_transaction:
-    member = latest_transaction.member
-    balance = member.balance
-else:
-    # Handle the case where no transaction was found
-    balance = None
+    latest_transaction = Transaction.objects.latest('id')
 
-def __str__(self):
+    if latest_transaction:
+        member = latest_transaction.member
+        balance = member.balance
+    else:
+        # Handle the case where no transaction was found
+        balance = None
+
+    def __str__(self):
         return f'{self.transaction_type} - {self.member_id} - {self.amount} - {self.timestamp}'
 
 
